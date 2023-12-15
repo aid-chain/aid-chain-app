@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import EditScreenInfo from '../../components/EditScreenInfo';
 import { View } from '../../components/Themed';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from "expo-location";
+import { LocationObject } from 'expo-location';
 
-export default function TabTwoScreen() {
+export default function MapScreen() {
+  const [location, setLocation] = useState<LocationObject | null>(null);
+
+  useEffect(() => {
+    (async () => {
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <MapView style={styles.map} showsUserLocation={location !== null}>
+        <Marker coordinate={{
+          latitude: (location?.coords.latitude || 39.924326503122906) + 0.0005, longitude: (location?.coords.longitude || 32.86163012250892) + 0.0005
+        }} />
+      </MapView>
     </View>
   );
 }
