@@ -26,7 +26,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -44,10 +44,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="map"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Map View',
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="emergencyList"
+        options={{
+          title: 'Emergencies',
+          tabBarIcon: ({ color }) => <TabBarIcon name="bars" color={color} />,
         }}
       />
     </Tabs>
